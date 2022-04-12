@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
-    'auth'
+    'auth',
+    'role:super_admin|admin',
 ])
     ->group(function () {
 
