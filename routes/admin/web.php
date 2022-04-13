@@ -13,6 +13,11 @@ Route::middleware([
             //home
             Route::get('/home', 'HomeController@index')->name('home');
 
+            //role routes
+            Route::get('/roles/data', 'RoleController@data')->name('roles.data');
+            Route::delete('/roles/bulk_delete', 'RoleController@bulkDelete')->name('roles.bulk_delete');
+            Route::resource('roles', 'RoleController');
+
         });
 
     });

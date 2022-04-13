@@ -5,11 +5,11 @@
 @section('crumb')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+            <h2><i class="fa fa-dashboard"></i> @lang('site.home')</h2>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">@lang('site.home')</a></li>
         </ul>
     </div>
 @endsection

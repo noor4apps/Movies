@@ -10,6 +10,7 @@ What inside?
 - Laravel 9.x [Laravel](https://laravel.com)
 - Authentication [laravel/ui](https://github.com/laravel/ui/tree/3.x)
 - Authorization [Laratrust](https://laratrust.santigarcor.me)
+- Yajra DataTables [laravel-datatables](https://github.com/yajra/laravel-datatables)
 
 ### Admin Dashboard Template
 - [vali-admin](https://github.com/pratikborsadiya/vali-admin)

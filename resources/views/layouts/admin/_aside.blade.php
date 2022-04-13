@@ -9,8 +9,13 @@
     <ul class="app-menu">
         <li>
             <a class="app-menu__item {{ Route::currentRouteName() == 'admin.home' ? 'active' : '' }}" href="{{ route('admin.home') }}">
-                <i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span>
+                <i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">@lang('site.home')</span>
             </a>
         </li>
+
+        <!-- roles -->
+        @if (auth()->user()->hasPermission('read_roles'))
+            <li><a class="app-menu__item {{ request()->is('*roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}"><i class="app-menu__icon fa fa-lock"></i> <span class="app-menu__label">@lang('roles.roles')</span></a></li>
+        @endif
     </ul>
 </aside>
