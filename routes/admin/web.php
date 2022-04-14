@@ -18,6 +18,10 @@ Route::middleware([
             Route::delete('/roles/bulk_delete', 'RoleController@bulkDelete')->name('roles.bulk_delete');
             Route::resource('roles', 'RoleController');
 
+            //admin routes
+            Route::get('/admins/data', 'AdminController@data')->name('admins.data');
+            Route::delete('/admins/bulk_delete', 'AdminController@bulkDelete')->name('admins.bulk_delete');
+            Route::resource('admins', 'AdminController');
         });
 
     });

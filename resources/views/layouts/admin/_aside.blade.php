@@ -17,5 +17,10 @@
         @if (auth()->user()->hasPermission('read_roles'))
             <li><a class="app-menu__item {{ request()->is('*roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}"><i class="app-menu__icon fa fa-lock"></i> <span class="app-menu__label">@lang('roles.roles')</span></a></li>
         @endif
+
+        <!-- admins -->
+        @if (auth()->user()->hasPermission('read_admins'))
+            <li><a class="app-menu__item {{ request()->is('*admins*') ? 'active' : '' }}" href="{{ route('admin.admins.index') }}"><i class="app-menu__icon fa fa-users"></i> <span class="app-menu__label">@lang('admins.admins')</span></a></li>
+        @endif
     </ul>
 </aside>
