@@ -38,7 +38,7 @@
                     <h5>@lang('roles.permissions') <span class="text-danger">*</span></h5>
 
                     @php
-                        $models = ['roles', 'admins', 'users'];
+                        $models = ['roles', 'admins', 'users', 'settings'];
                     @endphp
 
                     <table class="table">
@@ -62,8 +62,7 @@
                                     </div>
 
                                     @php
-                                        //create_roles, read_roles, update_roles, delete_roles
-                                            $permissionMaps = ['create', 'read', 'update', 'delete'];
+                                        $permissionMaps = ['create', 'read', 'update', 'delete'];
                                     @endphp
 
                                     @foreach ($permissionMaps as $permissionMap)

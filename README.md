@@ -11,6 +11,7 @@ What inside?
 - Authentication [laravel/ui](https://github.com/laravel/ui/tree/3.x)
 - Authorization [Laratrust](https://laratrust.santigarcor.me)
 - Yajra DataTables [laravel-datatables](https://github.com/yajra/laravel-datatables)
+- Persistent settings in Laravel [anlutro/laravel-settings](https://github.com/anlutro/laravel-settings)
 
 ### Admin Dashboard Template
 - [vali-admin](https://github.com/pratikborsadiya/vali-admin)

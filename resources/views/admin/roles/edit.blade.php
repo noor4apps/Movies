@@ -38,7 +38,7 @@
                     <h5>@lang('roles.permissions') <span class="text-danger">*</span></h5>
 
                     @php
-                        $models = ['roles', 'admins', 'users'];
+                        $models = ['roles', 'admins', 'users', 'settings'];
                     @endphp
 
                     <table class="table">

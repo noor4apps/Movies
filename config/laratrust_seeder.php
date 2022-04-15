@@ -16,6 +16,7 @@ return [
             'roles' => 'c,r,u,d',
             'admins' => 'c,r,u,d',
             'users' => 'c,r,u,d',
+            'settings' => 'c,r,u,d',
         ],
         'admin' => [],
         'user' => [],
