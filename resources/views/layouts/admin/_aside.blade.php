@@ -22,5 +22,10 @@
         @if (auth()->user()->hasPermission('read_admins'))
             <li><a class="app-menu__item {{ request()->is('*admins*') ? 'active' : '' }}" href="{{ route('admin.admins.index') }}"><i class="app-menu__icon fa fa-users"></i> <span class="app-menu__label">@lang('admins.admins')</span></a></li>
         @endif
+
+        <!-- users -->
+        @if (auth()->user()->hasPermission('read_users'))
+            <li><a class="app-menu__item {{ request()->is('*users*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}"><i class="app-menu__icon fa fa-user"></i> <span class="app-menu__label">@lang('users.users')</span></a></li>
+        @endif
     </ul>
 </aside>

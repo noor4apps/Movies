@@ -22,6 +22,11 @@ Route::middleware([
             Route::get('/admins/data', 'AdminController@data')->name('admins.data');
             Route::delete('/admins/bulk_delete', 'AdminController@bulkDelete')->name('admins.bulk_delete');
             Route::resource('admins', 'AdminController');
+
+            //user routes
+            Route::get('/users/data', 'UserController@data')->name('users.data');
+            Route::delete('/users/bulk_delete', 'UserController@bulkDelete')->name('users.bulk_delete');
+            Route::resource('users', 'UserController');
         });
 
     });

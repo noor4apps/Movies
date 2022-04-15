@@ -45,7 +45,7 @@ class AdminController extends Controller
 
     public function create()
     {
-        $roles = Role::whereNotIn('name', ['super_admin', 'admin'])->get();
+        $roles = Role::whereNotIn('name', ['super_admin', 'admin', 'user'])->get();
 
         return view('admin.admins.create', compact('roles'));
     }
@@ -64,7 +64,7 @@ class AdminController extends Controller
 
     public function edit(User $admin)
     {
-        $roles = Role::whereNotIn('name', ['super_admin', 'admin'])->get();
+        $roles = Role::whereNotIn('name', ['super_admin', 'admin', 'user'])->get();
 
         return view('admin.admins.edit', compact('admin', 'roles'));
     }
