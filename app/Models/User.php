@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
 
@@ -14,9 +15,11 @@ class User extends Authenticatable
 {
     use LaratrustUserTrait, HasApiTokens, HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'type'];
+    protected $fillable = ['name', 'email', 'password', 'type', 'image'];
 
     protected $hidden = ['password', 'remember_token',];
+
+    protected $appends = ['image_path'];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -29,6 +32,15 @@ class User extends Authenticatable
             get: fn($value) => ucfirst($value),
             set: fn($value) => strtolower($value),
         );
+    }
+
+    public function getImagePathAttribute(): string
+    {
+        if ($this->image) {
+            return Storage::url('uploads/' . $this->image);
+        }
+
+        return asset('admin_assets/images/default.png');
     }
 
     //scope
@@ -48,5 +60,9 @@ class User extends Authenticatable
     //rel
 
     //fun
+    public function hasImage(): bool
+    {
+        return $this->image != null;
+    }
 
 }

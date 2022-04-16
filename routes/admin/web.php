@@ -31,6 +31,17 @@ Route::middleware([
             //setting routes
             Route::get('/settings/general', 'SettingController@general')->name('settings.general');
             Route::resource('settings', 'SettingController')->only(['store']);
+
+            //profile routes
+            Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');
+            Route::patch('/profile/update', 'ProfileController@update')->name('profile.update');
+
+            //profile password routes
+            Route::name('profile.')->namespace('Profile')->group(function () {
+                Route::get('/password/edit', 'PasswordController@edit')->name('password.edit');
+                Route::patch('/password/update', 'PasswordController@update')->name('password.update');
+            });
+
         });
 
     });

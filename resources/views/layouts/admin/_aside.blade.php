@@ -1,6 +1,6 @@
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
-        <img class="app-sidebar__user-avatar" style="width: 60px; height: 60px;" src="{{ asset('admin_assets/images/default.png') }}" alt="User Image">
+        <img class="app-sidebar__user-avatar" style="width: 25%; height: 25%;" src="{{ auth()->user()->image_path }}" alt="User Image">
         <div>
             <p class="app-sidebar__user-name">{{ auth()->user()->name }}</p>
             <p class="app-sidebar__user-designation">{{ auth()->user()->roles->first()->name }}</p>
@@ -32,5 +32,13 @@
         @if (auth()->user()->hasPermission('read_settings'))
             <li><a class="app-menu__item {{ request()->is('*general*') ? 'active' : '' }}" href="{{ route('admin.settings.general') }}"><i class="app-menu__icon fa fa-cogs"></i> <span class="app-menu__label">@lang('settings.general') @lang('settings.settings')</span></a></li>
         @endif
+
+        <!-- profile -->
+        <li class="treeview {{ request()->is('*profile*') || request()->is('*password*')  ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-user-circle"></i><span class="app-menu__label">@lang('users.profile')</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item {{ request()->is('*profile*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="icon fa fa-circle-o"></i>@lang('users.edit_profile')</a></li>
+                <li><a class="treeview-item {{ request()->is('*password*') ? 'active' : '' }}" href="{{ route('admin.profile.password.edit') }}"><i class="icon fa fa-circle-o"></i>@lang('users.change_password')</a></li>
+            </ul>
+        </li>
     </ul>
 </aside>
