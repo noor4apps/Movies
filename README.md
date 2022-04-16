@@ -12,6 +12,7 @@ What inside?
 - Authorization [Laratrust](https://laratrust.santigarcor.me)
 - Yajra DataTables [laravel-datatables](https://github.com/yajra/laravel-datatables)
 - Persistent settings in Laravel [anlutro/laravel-settings](https://github.com/anlutro/laravel-settings)
+- Outgoing HTTP requests [guzzlehttp/guzzle](https://docs.guzzlephp.org/en/stable/index.html)
 
 ### Admin Dashboard Template
 - [vali-admin](https://github.com/pratikborsadiya/vali-admin)

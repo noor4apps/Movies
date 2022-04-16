@@ -28,6 +28,11 @@ Route::middleware([
             Route::delete('/users/bulk_delete', 'UserController@bulkDelete')->name('users.bulk_delete');
             Route::resource('users', 'UserController');
 
+            //genre routes
+            Route::get('/genres/data', 'GenreController@data')->name('genres.data');
+            Route::delete('/genres/bulk_delete', 'GenreController@bulkDelete')->name('genres.bulk_delete');
+            Route::resource('genres', 'GenreController')->only(['index', 'destroy']);
+
             //setting routes
             Route::get('/settings/general', 'SettingController@general')->name('settings.general');
             Route::resource('settings', 'SettingController')->only(['store']);
