@@ -33,7 +33,8 @@ class GetGenres extends Command
 
         foreach ($response->json()['genres'] as $genre) {
             Genre::create([
-                'name' => $genre['name']
+                'e_id' => $genre['id'],
+                'name' => $genre['name'],
             ]);
         }
 

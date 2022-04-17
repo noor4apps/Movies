@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('genres', function (Blueprint $table) {
+        Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('e_id');
-            $table->string('name');
+            $table->string('title');
+            $table->text('description');
+            $table->string('poster')->nullable();
+            $table->string('banner')->nullable();
+            $table->enum('type', ['upcoming', 'now_playing'])->nullable();
+            $table->date('release_date');
+            $table->double('vote', 8, 2);
+            $table->bigInteger('vote_count');
             $table->timestamps();
         });
     }
@@ -28,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('genres');
+        Schema::dropIfExists('movies');
     }
 };

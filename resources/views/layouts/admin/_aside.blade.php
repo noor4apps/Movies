@@ -33,6 +33,11 @@
             <li><a class="app-menu__item {{ request()->is('*genres*') ? 'active' : '' }}" href="{{ route('admin.genres.index') }}"><i class="app-menu__icon fa fa-list"></i> <span class="app-menu__label">@lang('genres.genres')</span></a></li>
         @endif
 
+        <!-- movies -->
+        @if (auth()->user()->hasPermission('read_movies'))
+            <li><a class="app-menu__item {{ request()->is('*movies*') ? 'active' : '' }}" href="{{ route('admin.movies.index') }}"><i class="app-menu__icon fa fa-film"></i> <span class="app-menu__label">@lang('movies.movies')</span></a></li>
+        @endif
+
         <!-- settings -->
         @if (auth()->user()->hasPermission('read_settings'))
             <li><a class="app-menu__item {{ request()->is('*general*') ? 'active' : '' }}" href="{{ route('admin.settings.general') }}"><i class="app-menu__icon fa fa-cogs"></i> <span class="app-menu__label">@lang('settings.general') @lang('settings.settings')</span></a></li>
