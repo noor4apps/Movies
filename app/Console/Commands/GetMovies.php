@@ -32,7 +32,7 @@ class GetMovies extends Command
     {
         $this->getPopularMovies();
 
-        $this->info('The commands were successful!');
+        $this->info('all commands were successful!');
     }
 
     private function getPopularMovies()
@@ -42,25 +42,35 @@ class GetMovies extends Command
             $response = Http::get(config('services.tmdb.base_url') . '/movie/popular?region=us&api_key=' . config('services.tmdb.api_key') . '&page=' . $i);
 
             foreach ($response->json()['results'] as $result) {
-                $movie = Movie::create([
-                    'e_id' => $result['id'],
-                    'title' => $result['title'],
-                    'description' => $result['overview'],
-                    'poster' => $result['poster_path'],
-                    'banner' => $result['backdrop_path'],
-                    'release_date' => $result['release_date'],
-                    'vote' => $result['vote_average'],
-                    'vote_count' => $result['vote_count'],
-                ]);
 
-                foreach ($result['genre_ids'] as $genre_id) {
-                    $genre = Genre::select('id')->where('e_id', $genre_id)->first();
-                    $movie->genres()->attach($genre->id);
-                }
+                $movie = Movie::updateOrCreate(
+                    [
+                        'e_id' => $result['id'],
+                        'title' => $result['title'],
+                    ],
+                    [
+                        'description' => $result['overview'],
+                        'poster' => $result['poster_path'],
+                        'banner' => $result['backdrop_path'],
+                        'type' => 'now_playing',
+                        'release_date' => $result['release_date'],
+                        'vote' => $result['vote_average'],
+                        'vote_count' => $result['vote_count'],
+                    ]);
+
+                $this->attachGenres($movie, $result);
             }
 
         }
 
         $this->info('get Popular Movies was successful!');
+    }
+
+    private function attachGenres(Movie $movie, $result)
+    {
+        foreach ($result['genre_ids'] as $genre_id) {
+            $genre = Genre::select('id')->where('e_id', $genre_id)->first();
+            $movie->genres()->attach($genre->id);
+        }
     }
 }
