@@ -37,10 +37,28 @@ class Movie extends Model
         });
     }
 
+    public function scopeWhenActorId($query, $actorId)
+    {
+        return $query->when($actorId, function ($q) use ($actorId) {
+
+            return $q->whereHas('actors', function ($qu) use ($actorId) {
+
+                return $qu->where('actors.id', $actorId);
+            });
+
+        });
+
+    }
+
     //rel
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'movie_genre');
+    }
+
+    public function actors()
+    {
+        return $this->belongsToMany(Actor::class, 'movie_actor');
     }
 
     //fun

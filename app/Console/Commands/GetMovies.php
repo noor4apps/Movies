@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Actor;
 use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Console\Command;
@@ -59,6 +60,8 @@ class GetMovies extends Command
                     ]);
 
                 $this->attachGenres($movie, $result);
+
+                $this->getAndAttachActors($movie);
             }
 
         }
@@ -73,4 +76,30 @@ class GetMovies extends Command
             $movie->genres()->attach($genre->id);
         }
     }
+
+    private function getAndAttachActors(Movie $movie)
+    {
+        $response = Http::get(config('services.tmdb.base_url') . '/movie/' . $movie->e_id . '/credits?api_key=' . config('services.tmdb.api_key'));
+
+        foreach ($response->json()['cast'] as $index => $cast) {
+
+            if ($cast['known_for_department'] != 'Acting') continue;
+
+            if ($index == 12) break;
+
+            $actor = Actor::where('e_id', $cast['id'])->first();
+
+            if (!$actor) {
+                $actor = Actor::create([
+                    'e_id' => $cast['id'],
+                    'name' => $cast['name'],
+                    'image' => $cast['profile_path'],
+                ]);
+            }
+
+            $movie->actors()->syncWithoutDetaching($actor->id);
+        }
+
+    }
+
 }

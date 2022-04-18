@@ -21,12 +21,20 @@ class MovieController extends Controller
     {
         $genres = Genre::pluck('id', 'name');
 
-        return view('admin.movies.index', compact('genres'));
+        $actor = null;
+
+        if (request()->actor_id) {
+            $actor = Actor::find(request()->actor_id);
+        }
+
+        return view('admin.movies.index', compact('genres', 'actor'));
     }
 
     public function data()
     {
-        $movies = Movie::whenGenreId(request()->genre_id)
+        $movies = Movie::query()
+            ->whenGenreId(request()->genre_id)
+            ->whenActorId(request()->actor_id)
             ->with('genres:id,name');
 
         return DataTables::of($movies)
