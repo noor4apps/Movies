@@ -13,7 +13,22 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('admin.home');
+        $popularMovies = Movie::where('type', null)
+            ->limit(5)
+            ->orderBy('vote_count', 'desc')
+            ->get();
+
+        $nowPlayingMovies = Movie::where('type', 'now_playing')
+            ->limit(5)
+            ->orderBy('vote_count', 'desc')
+            ->get();
+
+        $upcomingMovies = Movie::where('type', 'upcoming')
+            ->limit(5)
+            ->orderBy('vote_count', 'desc')
+            ->get();
+
+        return view('admin.home', compact('popularMovies', 'upcomingMovies', 'nowPlayingMovies'));
     }
 
     public function topStatistics()
