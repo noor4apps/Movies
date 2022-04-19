@@ -50,6 +50,18 @@ class Movie extends Model
 
     }
 
+    public function scopeWhenType($query, $type)
+    {
+        return $query->when($type, function ($q) use ($type) {
+
+            if ($type == 'popular') {
+                return $q->where('type', null);
+            }
+
+            return $q->where('type', $type);
+        });
+    }
+
     //rel
     public function genres()
     {

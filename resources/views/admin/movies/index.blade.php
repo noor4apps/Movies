@@ -69,6 +69,17 @@
                         </div>
                     </div>
 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select id="type" class="form-control select2" required>
+                                <option value="">@lang('site.all') @lang('movies.movies')</option>
+                                @foreach (['now_playing', 'upcoming'] as $type)
+                                    <option value="{{ $type }}" {{ $type == request()->type ? 'selected' : '' }}>@lang('movies.' . $type)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                 </div><!-- end of row -->
 
                 <div class="row">
@@ -119,6 +130,7 @@
 
         let genre = "{{ request()->genre_id }}";
         let actor = "{{ request()->actor_id }}";
+        let type = "{{ request()->type }}";
 
         let moviesTable = $('#movies-table').DataTable({
             dom: "tiplr",
@@ -132,6 +144,7 @@
                 data: function (d) {
                     d.genre_id = genre;
                     d.actor_id = actor;
+                    d.type = type;
                 }
             },
             columns: [
@@ -160,6 +173,11 @@
 
         $('#actor').on('change', function () {
             actor = this.value;
+            moviesTable.ajax.reload();
+        })
+
+        $('#type').on('change', function () {
+            type = this.value;
             moviesTable.ajax.reload();
         })
 

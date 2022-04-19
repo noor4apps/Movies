@@ -33,6 +33,10 @@ class GetMovies extends Command
     {
         $this->getPopularMovies();
 
+        $this->getNowPlayingMovies();
+
+        $this->getUpcomingMovies();
+
         $this->info('all commands were successful!');
     }
 
@@ -41,6 +45,40 @@ class GetMovies extends Command
         for ($i = 1 ; $i <= config('services.tmdb.max_pages'); $i++) {
 
             $response = Http::get(config('services.tmdb.base_url') . '/movie/popular?region=us&api_key=' . config('services.tmdb.api_key') . '&page=' . $i);
+
+            foreach ($response->json()['results'] as $result) {
+
+                $movie = Movie::updateOrCreate(
+                    [
+                        'e_id' => $result['id'],
+                        'title' => $result['title'],
+                    ],
+                    [
+                        'description' => $result['overview'],
+                        'poster' => $result['poster_path'],
+                        'banner' => $result['backdrop_path'],
+                        'release_date' => $result['release_date'],
+                        'vote' => $result['vote_average'],
+                        'vote_count' => $result['vote_count'],
+                    ]);
+
+                $this->attachGenres($movie, $result);
+
+                $this->getAndAttachActors($movie);
+
+                $this->getImages($movie);
+            }
+
+        }
+
+        $this->info('get Popular Movies was successful!');
+    }
+
+    private function getNowPlayingMovies()
+    {
+        for ($i = 1 ; $i <= config('services.tmdb.max_pages'); $i++) {
+
+            $response = Http::get(config('services.tmdb.base_url') . '/movie/now_playing?region=us&api_key=' . config('services.tmdb.api_key') . '&page=' . $i);
 
             foreach ($response->json()['results'] as $result) {
 
@@ -68,8 +106,44 @@ class GetMovies extends Command
 
         }
 
-        $this->info('get Popular Movies was successful!');
+        $this->info('get Now Playing Movies was successful!');
     }
+
+    private function getUpcomingMovies()
+    {
+        for ($i = 1 ; $i <= config('services.tmdb.max_pages'); $i++) {
+
+            $response = Http::get(config('services.tmdb.base_url') . '/movie/upcoming?region=us&api_key=' . config('services.tmdb.api_key') . '&page=' . $i);
+
+            foreach ($response->json()['results'] as $result) {
+
+                $movie = Movie::updateOrCreate(
+                    [
+                        'e_id' => $result['id'],
+                        'title' => $result['title'],
+                    ],
+                    [
+                        'description' => $result['overview'],
+                        'poster' => $result['poster_path'],
+                        'banner' => $result['backdrop_path'],
+                        'type' => 'upcoming',
+                        'release_date' => $result['release_date'],
+                        'vote' => $result['vote_average'],
+                        'vote_count' => $result['vote_count'],
+                    ]);
+
+                $this->attachGenres($movie, $result);
+
+                $this->getAndAttachActors($movie);
+
+                $this->getImages($movie);
+            }
+
+        }
+
+        $this->info('get Upcoming Movies was successful!');
+    }
+
 
     private function attachGenres(Movie $movie, $result)
     {
