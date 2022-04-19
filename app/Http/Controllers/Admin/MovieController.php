@@ -13,7 +13,7 @@ class MovieController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:read_movies')->only(['index']);
+        $this->middleware('permission:read_movies')->only(['index', 'data', 'show']);
         $this->middleware('permission:delete_movies')->only(['delete', 'bulk_delete']);
     }
 
@@ -57,10 +57,9 @@ class MovieController extends Controller
 
     public function show(Movie $movie)
     {
-        $movie->load(['genres', 'actors', 'images']);
+        $movie->with('genres:id,name', 'actors', 'images');
 
         return view('admin.movies.show', compact('movie'));
-
     }
 
     public function destroy(Movie $movie)

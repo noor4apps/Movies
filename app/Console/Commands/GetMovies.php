@@ -62,6 +62,8 @@ class GetMovies extends Command
                 $this->attachGenres($movie, $result);
 
                 $this->getAndAttachActors($movie);
+
+                $this->getImages($movie);
             }
 
         }
@@ -73,7 +75,7 @@ class GetMovies extends Command
     {
         foreach ($result['genre_ids'] as $genre_id) {
             $genre = Genre::select('id')->where('e_id', $genre_id)->first();
-            $movie->genres()->attach($genre->id);
+            $movie->genres()->syncWithoutDetaching($genre->id);
         }
     }
 
@@ -100,6 +102,23 @@ class GetMovies extends Command
             $movie->actors()->syncWithoutDetaching($actor->id);
         }
 
+    }
+
+    public function getImages(Movie $movie)
+    {
+        $response = Http::get(config('services.tmdb.base_url') . '/movie/' . $movie->e_id . '/images?api_key=' . config('services.tmdb.api_key'));
+
+        $movie->images()->delete();
+
+        foreach ($response->json()['backdrops'] as $index => $image) {
+
+            if ($index == 8) break;
+
+            $movie->images()->create([
+                'image' => $image['file_path']
+            ]);
+
+        }
     }
 
 }
