@@ -15,6 +15,9 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- loader -->
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/loader.css') }}">
+
     @stack('styles')
 </head>
 <body class="app sidebar-mini">
