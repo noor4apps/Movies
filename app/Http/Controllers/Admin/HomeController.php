@@ -7,6 +7,7 @@ use App\Models\Actor;
 use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -28,4 +29,19 @@ class HomeController extends Controller
         ]);
 
     }
+
+    public function moviesChart()
+    {
+        $movies = Movie::select(
+                DB::raw('YEAR(release_date) as year'),
+                DB::raw('MONTH(release_date) as month'),
+                DB::raw('COUNT(id) as total_movies'),
+            )
+            ->whereYear('release_date', request()->year)
+            ->groupBy('month')
+            ->get();
+
+        return view('admin._movies_chart', compact('movies'));
+    }
+
 }

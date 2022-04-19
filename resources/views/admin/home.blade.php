@@ -74,16 +74,58 @@
 
             </div><!-- end of row -->
 
+            <!-- movies chart -->
+            <div class="row my-3">
+
+                <div class="col-md-12">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+                                <h4>@lang('movies.movies_chart')</h4>
+                                <select id="movies-chart-year" style="width: 100px;">
+                                    @for ($i = 5; $i >=0 ; $i--)
+                                        <option value="{{ now()->subYears($i)->year }}" {{ now()->subYears($i)->year == now()->year ? 'selected' : '' }}>
+                                            {{ now()->subYears($i)->year }}
+                                        </option>
+                                    @endfor
+                                </select>
+                            </div>
+
+                            <div id="movies-chart-wrapper"></div>
+
+                        </div><!-- end of card body -->
+
+                    </div><!-- end of card -->
+
+                </div><!-- end of col -->
+
+            </div><!-- end of row -->
+
         </div>
     </div>
 @endsection
 
 @push('scripts')
+    <!-- apex chart -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <script>
 
         $(function () {
 
             topStatistics();
+
+            moviesChart("{{ now()->year }}");
+
+            $('#movies-chart-year').on('change', function () {
+
+                let year = $(this).find(':selected').val();
+
+                moviesChart(year);
+            });
 
         });
 
@@ -102,6 +144,30 @@
                 },
             });
         } //end of topStatistics
+
+        function moviesChart(year) {
+
+            let loader = `
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="loader loader-md"></div>
+                    </div>
+                `;
+
+            $('#movies-chart-wrapper').empty().append(loader);
+
+            $.ajax({
+                url: "{{ route('admin.home.movies_chart') }}",
+                data: {
+                    'year': year,
+                },
+                cache: false,
+                success: function (html) {
+                    $('#movies-chart-wrapper').empty().append(html);
+                },
+
+            });//end of ajax call
+
+        } //end of moviesChart
 
     </script>
 @endpush

@@ -13,6 +13,7 @@ Route::middleware([
             //home
             Route::get('/home', 'HomeController@index')->name('home');
             Route::get('/home/top_statistics', 'HomeController@topStatistics')->name('home.top_statistics');
+            Route::get('/home/movies_chart', 'HomeController@moviesChart')->name('home.movies_chart');
 
             //role routes
             Route::get('/roles/data', 'RoleController@data')->name('roles.data');
