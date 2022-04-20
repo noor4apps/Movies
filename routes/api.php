@@ -12,6 +12,9 @@ Route::get('/genres', 'GenreController@index');
 
 //movie routes
 Route::get('/movies', 'MovieController@index');
+Route::get('/movies/{movie}/actors', 'MovieController@actors');
+Route::get('/movies/{movie}/images', 'MovieController@images');
+Route::get('/movies/{movie}/related', 'MovieController@related');
 
 Route::middleware('auth:sanctum')->group(function () {
 

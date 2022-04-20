@@ -24,6 +24,7 @@ class MovieResource extends JsonResource
             'release_date' => $this->release_date,
             'vote' => $this->vote,
             'vote_count' => $this->vote_count,
+            'genres' => GenreResource::collection($this->whenLoaded('genres')),
         ];
     }
 }
