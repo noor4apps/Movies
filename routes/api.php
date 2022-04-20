@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 
+//genre routes
+Route::get('/genres', 'GenreController@index');
+
 Route::middleware('auth:sanctum')->group(function () {
 
     //user route
