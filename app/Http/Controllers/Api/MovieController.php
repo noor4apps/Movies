@@ -13,6 +13,7 @@ class MovieController extends Controller
     {
         $movies = Movie::query()
             ->whenType(request()->type)
+            ->whenSearch(request()->search)
             ->paginate(10);
 
         $data['movies'] = MovieResource::collection($movies)->response()->getData(true);

@@ -62,6 +62,14 @@ class Movie extends Model
         });
     }
 
+    public function scopeWhenSearch($query, $search)
+    {
+        return $query->when($search, function ($q) use ($search) {
+
+            return $q->where('title', 'like', '%' . $search . '%');
+        });
+    }
+
     //rel
     public function genres()
     {
