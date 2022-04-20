@@ -10,6 +10,9 @@ Route::post('/register', 'AuthController@register');
 //genre routes
 Route::get('/genres', 'GenreController@index');
 
+//movie routes
+Route::get('/movies', 'MovieController@index');
+
 Route::middleware('auth:sanctum')->group(function () {
 
     //user route
