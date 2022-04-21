@@ -17,6 +17,7 @@ class MovieController extends Controller
             ->with('genres')
             ->whenType(request()->type)
             ->whenSearch(request()->search)
+            ->whenFavoredById(request()->favored_by_id)
             ->paginate(10);
 
         $data['movies'] = MovieResource::collection($movies)->response()->getData(true);
@@ -44,5 +45,19 @@ class MovieController extends Controller
             ->paginate(10);
 
         return response()->api(MovieResource::collection($movies));
+    }
+
+    public function toggleFavorite()
+    {
+        auth()->user()->favoredMovies()->toggle([request()->movie_id]);
+
+        return response()->api([], 0, 'movie toggled successfully');
+    }
+
+    public function isFavored(Movie $movie)
+    {
+        $data['is_favored'] = $movie->isFavored();
+
+        return response()->api($data);
     }
 }

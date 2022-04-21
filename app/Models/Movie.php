@@ -70,6 +70,17 @@ class Movie extends Model
         });
     }
 
+    public function scopeWhenFavoredById($query, $favoredById)
+    {
+        return $query->when($favoredById, function ($q) use ($favoredById) {
+
+            return $q->whereHas('favoredByUsers', function ($qu) use ($favoredById){
+
+                return $qu->where('id', $favoredById);
+            });
+        });
+    }
+
     //rel
     public function genres()
     {
@@ -86,6 +97,15 @@ class Movie extends Model
         return $this->hasMany(Image::class);
     }
 
+    public function favoredByUsers()
+    {
+        return $this->belongsToMany(User::class, 'user_favored_movie', 'movie_id', 'user_id');
+    }
+
     //fun
+    public function isFavored()
+    {
+        return in_array(auth()->user()->id, $this->favoredByUsers()->pluck('id')->toArray());
+    }
 
 }

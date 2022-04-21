@@ -18,6 +18,10 @@ Route::get('/movies/{movie}/related', 'MovieController@related');
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    //movie route
+    Route::get('/movies/toggle-favorite', 'MovieController@toggleFavorite');
+    Route::get('/movies/{movie}/is-favored', 'MovieController@isFavored');
+
     //user route
     Route::get('/user', 'AuthController@user');
 
