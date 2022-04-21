@@ -1,14 +1,13 @@
 @if (session('success'))
-
-    <script src="{{ asset('admin_assets/plugins/noty/noty.min.js') }}">
+    <script>
         new Noty({
-            layout: 'topRight',
+            type: 'success',
+            layout: 'topCenter',
             text: "{{ session('success') }}",
             timeout: 2000,
             killer: true
         }).show();
     </script>
-
 @endif
 
 @if(session('error'))

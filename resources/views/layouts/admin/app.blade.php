@@ -17,6 +17,10 @@
 
     <!-- loader -->
     <link rel="stylesheet" href="{{ asset('admin_assets/plugins/loader.css') }}">
+    
+    <!-- noty-->
+    <link rel="stylesheet" href="{{ asset('admin_assets/plugins/noty/noty.css') }}">
+    <script src="{{ asset('admin_assets/plugins/noty/noty.min.js') }}"></script>
 
     @stack('styles')
 </head>
@@ -38,10 +42,6 @@
 <script src="{{ asset('admin_assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('admin_assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('admin_assets/js/main.js') }}"></script>
-
-<!-- noty-->
-<link rel="stylesheet" href="{{ asset('admin_assets/plugins/noty/noty.css') }}">
-<script src="{{ asset('admin_assets/plugins/noty/noty.min.js') }}"></script>
 
 <!-- datatable-->
 <script type="text/javascript" src="{{ asset('admin_assets/js/plugins/jquery.dataTables.min.js') }}"></script>
