@@ -36,6 +36,7 @@ class MovieController extends Controller
             ->whenGenreId(request()->genre_id)
             ->whenActorId(request()->actor_id)
             ->whenType(request()->type)
+            ->withCount('favoredByUsers')
             ->with('genres:id,name');
 
         return DataTables::of($movies)
