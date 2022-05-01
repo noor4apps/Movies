@@ -62,4 +62,17 @@ class MovieController extends Controller
 
         return response()->api($data);
     }
+
+    public function favorite()
+    {
+        $movies = Movie::query()
+            ->with('genres')
+            ->whenFavoredById(auth()->user()->id)
+            ->paginate(10);
+
+        $data['movies'] = MovieResource::collection($movies)->response()->getData(true);
+
+        return response()->api($data);
+    }
+
 }
