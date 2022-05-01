@@ -17,6 +17,8 @@ class MovieController extends Controller
             ->with('genres')
             ->whenType(request()->type)
             ->whenSearch(request()->search)
+            ->whenGenreId(request()->genre_id)
+            ->whenActorId(request()->actor_id)
             ->whenFavoredById(request()->favored_by_id)
             ->paginate(10);
 
